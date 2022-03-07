@@ -1,0 +1,44 @@
+h1 {
+  display: flex;
+}
+
+.apple,
+.bestScore {
+  display: flex;
+  justify-content: flex-start;
+  padding: 0 30px 0 30px;
+  height: 50px;
+}
+
+/* .bestScore {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 30px 0 30px;
+  height: 50px;
+} */
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  margin: 10px;
+  background-color: #7fffd4;
+}
+
+#gameGrid {
+  display: grid;
+  grid-template-columns: repeat(18, 1fr);
+  grid-template-rows: repeat(15, 1fr);
+
+  background-color: #ffffff;
+  height: 150vmin;
+  width: 150vmin;
+  align-self: auto;
+}
+.snake {
+  background-color: green;
+  border: 0.5vmin solid black;
+}
