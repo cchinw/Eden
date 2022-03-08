@@ -32,33 +32,30 @@ for (let i = 0; i < height; i++) {
 }
 
 //DOM Elements
-let gridBox = document.querySelectorAll('.grid', `.row${i} columns${j}`)
+let gridBox = document.querySelector('.edenContainer')
 let gameScore = document.getElementsByClassName('.apple')
 let bestScore = document.getElementsByClassName('.bestScore')
 let button = document.querySelector('button')
 
 //set arrow key movement event listener
-const left = 37
-const up = 38
-const right = 39
-const down = 40
 
 function gameKeys(s) {
-  gridBox.firstGridBox.add('.snake')
-
-  console.log(s.keycode)
-
-  if (s.keycode === up) {
+  firstGridBox.className += 'snake'
+  if (s.code === 'ArrowUp') {
     snakeDirection = -width
-  } else if (s.keycode === down) {
+    console.log(s.code)
+  } else if (s.code === 'ArrowDown') {
     snakeDirection = +width
-  } else if (s.keycode === left) {
+    console.log(s.code)
+  } else if (s.code === 'ArrowLeft') {
     snakeDirection = -1
-  } else if (s.keycode === right) {
+    console.log(s.code)
+  } else if (s.code === 'ArrowRight') {
     snakeDirection = 1
+    console.log(s.code)
   }
 }
-document.addEventlistener('keyup', gameKeys)
+document.addEventListener('keydown', (e) => gameKeys(e))
 
 //Functions for game logic
 
