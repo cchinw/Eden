@@ -37,6 +37,7 @@ body {
   height: 150vmin;
   width: 150vmin;
   align-self: auto;
+  border: 30vmin solid #7fffd4;
 }
 .snake {
   background-color: green;
