@@ -16,9 +16,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let snakeDefault = (snake) => {
     snake.forEach((element) => {
-      let snakes = gridBox[element]
+      let snakes = snakeStart.gridBox[element]
     })
   }
+  console.log(snakeDefault)
+  console.log(appleDefault)
 
   //Variables for Scoring
   let appleScore = 0
@@ -46,6 +48,8 @@ document.addEventListener('DOMContentLoaded', () => {
   let bestScore = document.getElementsByClassName('bestScore')
   let button = document.getElementById('#start')
 
+  button.addEventListener('click', startGame)
+
   //Functions for game logic
   function hideStartButton() {
     let sG = document.getElementById('start')
@@ -56,11 +60,13 @@ document.addEventListener('DOMContentLoaded', () => {
     sG.style.display = 'block'
   }
 
-  function startGame() {
-    appleDefault()
-    snakeDefault()
-    hasGamestarted = true
-    hideStartButton()
+  let startGame = (gamePlay) => {
+    gamePlay.forEach((play) => {
+      appleDefault()
+      snakeDefault()
+      hasGamestarted = true
+      hideStartButton()
+    })
   }
 
   //set arrow key movement event listener
@@ -68,8 +74,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const up = 38
   const right = 39
   const down = 40
-
-  let plays = []
 
   function gameKeys(s) {
     gridBox[firstGridBox].classList.remove('snake')
