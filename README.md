@@ -4,7 +4,7 @@ Snake game inspired by the story of the garden of Eden
 
 ## General Overview
 
-A snake chases an apple across a 17 x 15 grid box. Each time the snake gets the apple, the snake's length increasesand the apple is _eaten_ and moves to a different locationon the grid box. The snake chases the apple across the board, until it hits the edges of the grid box, or it hits itself. In that case, it would be **Game Over**, and the game restarts. This game would be built using HTML, CSS and JavaScript.
+A snake chases an apple across a 17 x 15 grid box. Each time the snake gets the apple, the snake's length increases and the apple is _eaten_ and moves to a different locationon the grid box. The snake chases the apple across the board, until it hits the edges of the grid box, or it hits itself. In that case, it would be **Game Over**, and the game restarts. This game would be built using HTML, CSS and JavaScript.
 
 ## Game Outlook
 
