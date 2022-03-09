@@ -22,13 +22,11 @@ function snakeIsHere(row, column) {
   return result
 }
 
-let appleStart = document.getElementsByClassName('row7columns13')
-
 let foodBody = [{ x: 13, y: 7 }]
 
 function foodIsHere(row, column) {
   let result = false
-  foodBody.forEach(function checkFoofPlacement(loc) {
+  foodBody.forEach(function checkFoodPlacement(loc) {
     if (loc.x === column && loc.y === row) {
       result = true
     }
@@ -40,7 +38,7 @@ let snakeDirectionX = 1
 let snakeDirectionY = 0
 let snakeSpeed = 1
 let interval = 0
-let IntervalTime = 250
+let intervalTime = 250
 
 //Variables for Scoring
 let appleScore = 0
@@ -49,6 +47,7 @@ let personalBest = 0
 //Building grid on gameBoard
 const width = 18
 const height = 15
+const gridSize = width * height
 
 //DOM Elements
 let gridBox = document.querySelector('.edenContainer')
@@ -125,10 +124,33 @@ function startGame() {
   appleScore.innerHTML = appleScore
   //TODO: Call function to generate random apple
   clearInterval(interval)
-  interval = setInterval(snakeOutcomes, IntervalTime)
+  interval = setInterval(snakeOutcomes, intervalTime)
 }
 
 button.addEventListener('click', startGame)
+
+function randomfood(min, max) {
+  return Math.round((Math.random() * (max - min) + min) / gridBox) * gridBox
+}
+
+function generateApple() {
+  appleX = randomfood(0, gridBox.width - gridBox)
+  appleY = randomfood(0, gridBox.height - gridBox)
+
+  snakeBody.forEach(function snakeEatenFood(yum) {
+    let eatenFood = yum.x === appleX && yum.y === appleY
+    if (eatenFood) {
+      generateApple()
+    }
+  })
+}
+function snakeMovement() {
+  // snake head
+  // grow snake on apple eat
+  //increase apple score
+  //show score display on apple scoreboard
+  // generate new apple on random board location
+}
 
 function snakeOutcomes() {
   //Snake hitting the wall //Snake hitting its own self
