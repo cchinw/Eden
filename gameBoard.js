@@ -1,10 +1,5 @@
 // Game Tools
 let hasGamestarted = false
-let snakeStart = document.getElementsByClassName(
-  'row7columns2',
-  'row7columns3',
-  'row7columns4'
-)
 
 let snakeBody = [
   { x: 2, y: 7 },
@@ -39,6 +34,8 @@ let snakeDirectionY = 0
 let snakeSpeed = 1
 let interval = 0
 let intervalTime = 250
+let appleX
+let appleY
 
 //Variables for Scoring
 let appleScore = 0
@@ -146,11 +143,23 @@ function generateApple() {
 }
 function snakeMovement() {
   // snake head
+  const snakeHead = { x: 4, y: 7 }
   // grow snake on apple eat
-  //increase apple score
-  //show score display on apple scoreboard
-  // generate new apple on random board location
+  snakeBody.unshift(snakeHead)
+  const hasEatenApple = { x: 4 === appleX, y: 7 === appleY }
+  if (hasEatenApple) {
+    //increase apple score
+    appleScore += 1
+    //show score display on apple scoreboard
+    gameScore.innerHTML = appleScore
+    // generate new apple on random board location
+    generateApple()
+  } else {
+    snakeBody.pop()
+  }
 }
+
+setTimeout()
 
 function snakeOutcomes() {
   //Snake hitting the wall //Snake hitting its own self
