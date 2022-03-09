@@ -40,7 +40,7 @@ let snakeDirectionX = 1
 let snakeDirectionY = 0
 let snakeSpeed = 1
 let interval = 0
-let IntervalTime = 0
+let IntervalTime = 250
 
 //Variables for Scoring
 let appleScore = 0
@@ -124,14 +124,8 @@ function startGame() {
   personalBest = 0
   appleScore.innerHTML = appleScore
   //TODO: Call function to generate random apple
-  drawBoard()
   clearInterval(interval)
   interval = setInterval(snakeOutcomes, IntervalTime)
 }
 
 button.addEventListener('click', startGame)
-
-function snakeOutcomes() {
-  //Snake hitting the wall //Snake hitting its own self
-  //Snake hitting an apple
-}
