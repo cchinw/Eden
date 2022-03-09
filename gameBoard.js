@@ -98,7 +98,7 @@ function gameKeys(s) {
     snakeDirectionX = -1
     snakeDirectionY = 0
     console.log(s.code)
-  } else if (s.code === 'ArrowRight' && goingLeft) {
+  } else if (s.code === 'ArrowRight' && !goingLeft) {
     snakeDirectionX = 1
     snakeDirectionY = 0
     console.log(s.code)
@@ -129,3 +129,32 @@ function startGame() {
 }
 
 button.addEventListener('click', startGame)
+
+function snakeOutcomes() {
+  //Snake hitting the wall //Snake hitting its own self
+  if (isGameOver()) {
+    return
+  }
+
+  //place Food
+  //move SNAKE
+
+  drawBoard()
+  clearInterval(interval)
+}
+
+//Snake hitting an apple
+
+function isGameOver() {
+  for (let i = 4; i < snakeBody.length; i++) {
+    if (snakeBody[i].x === snakeBody[0].x && snakeBody[i].y === snake[0].y)
+      return true
+  }
+
+  const hitLeftWall = snakeBody[0].x < 0
+  const hitRightWall = snakeBody[0].x > width - 1
+  const hitTopWall = snakeBody[0].y < 0
+  const hitBottomWall = snakeBody[0].y > height - 1
+
+  return hitLeftWall || hitRightWall || hitTopWall || hitBottomWall
+}
