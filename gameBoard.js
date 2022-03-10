@@ -24,6 +24,8 @@ let snakeBody = [
   { x: 3, y: 7 },
   { x: 2, y: 7 }
 ]
+// let snakeHead = [{ x: 4, y: 7 }]
+// let snakeTail = [{ x: 2, y: 7 }]
 
 function snakeIsHere(row, column) {
   let result = false
@@ -97,7 +99,7 @@ generateApple()
 document.addEventListener('keydown', (s) => gameKeys(s))
 
 function gameKeys(s) {
-  // let firstGridBox = document.querySelector('.edenContainer').firstElementChild
+  snakeBody
 
   // firstGridBox.classList.toggle('snake')
   const goingUp = snakeDirectionY === -1
@@ -189,50 +191,58 @@ function generateApple() {
   appleY = randomfood(0, gridBox.height - 1)
 
   snakeBody.forEach(function snakeEatenFood(yum) {
-    let eatenFood = yum.x === appleX && yum.y === appleY
-    if (eatenFood) {
-      generateApple()
-    }
+    const eatenFood = yum.x === appleX && yum.y === appleY
+    if (eatenFood) generateApple()
   })
 }
 function snakeMovement() {
   // snake head
-  const snakeHead = { x: snakeBody[4].x, y: snakeBody[7].y }
-  // grow snake on apple eat
+  let snakeHead = { x: snakeBody[0].x, y: snakeBody[0].y }
   snakeBody.unshift(snakeHead)
-  const hasEatenApple = snakeBody[0].x === appleX && snakeBody[0].y === appleY
-  if (hasEatenApple) {
-    //increase apple score
-    appleScore += 1
-    //show score display on apple scoreboard
+  // grow snake on apple eat
+  const snakeEatsApple = snakeBody[0].x === appleX && snakeBody[0].y === appleY
+  if (snakeEatsApple) {
+    appleScore++
     gameScore.innerHTML = appleScore
-    // generate new apple on random board location
     generateApple()
   } else {
     snakeBody.pop()
   }
+
+  // if (gridBox.snakeBody[0].classList('food')) {
+  //   gridBox[snakeBody[0]].classList.remove('food')
+  //   gridBox[snakeTail].classList.add('snake')
+  //   snakeBody.push(snakeTail)
+  //   appleScore++
+  //   gameScore.innerHTML = appleScore
+  //   intervalTime = intervalTime * snakeSpeed
+  //   interval = setInterval(snakeOutcomes, intervalTime)
+  // }
+  // gridBox[snakeBody[0]].classList.add('snake')
+
+  // snakeBody.unshift(snakeHead)
+  // const hasEatenApple = snakeBody[0].x === appleX && snakeBody[0].y === appleY
+  // if (hasEatenApple) {
+  //   //increase apple score
+  //   appleScore += 1
+  //   //show score display on apple scoreboard
+  //   appleScore.innerHTML = appleScore
+  //   // generate new apple on random board location
+  //   generateApple()
+  // } else {
+  //   snakeBody.pop()
+  // }
 }
 
 function snakeOutcomes() {
   //Snake hitting the wall //Snake hitting its own self
   if (isGameOver()) {
-    return
+    return clearInterval(interval)
   }
   //place Food
   //move SNAKE
 
   snakeBody.unshift(snakeBody[0] + snakeDirectionX)
-
-  if (gridBox[snakeBody[0]].classList.contains('food')) {
-    gridBox[snakeBody[0]].classList.remove('food')
-    gridBox[snakeTail].classList.add('snake')
-    snakeBody.push(snakeTail)
-    appleScore++
-    gameScore.innerHTML = appleScore
-    intervalTime = intervalTime * snakeSpeed
-    interval = setInterval(snakeOutcomes, intervalTime)
-  }
-  gridBox[snakeBody[0]].classList.add('snake')
 
   drawBoard()
   clearInterval(interval)
