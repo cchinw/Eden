@@ -16,6 +16,19 @@
 
 //---------------------------------------------------------------------Starts Here
 
+//DOM Elements
+let gridBox = document.querySelector('.edenContainer')
+let gameScore = document.getElementsByClassName('.apple')
+let bestScore = document.getElementsByClassName('.bestScore')
+let button = document.getElementById('start')
+let snake = document.getElementsByClassName('.snake')
+let food = document.getElementsByClassName('.food')
+
+//Building grid on gameBoard
+const width = 18
+const height = 15
+const gridSize = width * height
+
 // Game Tools
 let hasGamestarted = false
 
@@ -24,34 +37,45 @@ let snakeBody = [
   { x: 3, y: 7 },
   { x: 2, y: 7 }
 ]
+console.log(snakeBody)
+
 // let snakeHead = [{ x: 4, y: 7 }]
 // let snakeTail = [{ x: 2, y: 7 }]
 
-function snakeIsHere(row, column) {
+function snakeIsHere(x, y) {
   let result = false
-  snakeBody.forEach(function checkPlacement(loc) {
-    if (loc.x === column && loc.y === row) {
+  snakeBody.forEach((element) => {
+    if (element.x === x && element.y === y) {
       result = true
     }
   })
   return result
 }
+
+console.log(snakeIsHere(0, 0))
+console.log(snakeIsHere(2, 7))
+console.log(snakeIsHere(5, 7))
 
 let foodBody = [{ x: 13, y: 7 }]
 
-function foodIsHere(row, column) {
+function foodIsHere(x, y) {
   let result = false
-  foodBody.forEach(function checkFoodPlacement(loc) {
-    if (loc.x === column && loc.y === row) {
+  foodBody.forEach((element) => {
+    if (element.x === x && element.y === y) {
       result = true
     }
   })
   return result
 }
 
+function findEmptyGrid() {
+  if (snakeIsHere === true) {
+    foodIsHere === false
+  }
+}
+
 let directionChange = false
-let snakeDirectionX = 1
-let snakeDirectionY = 0
+let snakeDirection = 1 //1 is right, 2 is left, 3 is up and 4 is down
 let snakeSpeed = 1
 let interval = 0
 let intervalTime = 250
@@ -62,97 +86,116 @@ let appleY
 let appleScore = 0
 let personalBest = 0
 
-//Building grid on gameBoard
-const width = 18
-const height = 15
-const gridSize = width * height
-
-//DOM Elements
-let gridBox = document.querySelector('.edenContainer')
-let gameScore = document.getElementsByClassName('.apple')
-let bestScore = document.getElementsByClassName('.bestScore')
-let button = document.getElementById('start')
-let snake = document.getElementsByClassName('.snake')
-let food = document.getElementsByClassName('.food')
-
 function drawBoard() {
   for (let i = 0; i < height; i++) {
     for (let j = 0; j < width; j++) {
       let gridPosition = document.createElement('div')
-
       if (snakeIsHere(i, j)) {
-        gridPosition.setAttribute('class', `row${i}columns${j} snake`)
+        gridPosition.setAttribute('class', `x${i}y${j} snake`)
       } else if (foodIsHere(i, j)) {
-        gridPosition.setAttribute('class', `row${i}columns${j} food`)
+        gridPosition.setAttribute('class', `x${i}y${j} food`)
       } else {
-        gridPosition.setAttribute('class', `row${i}columns${j}`)
+        gridPosition.setAttribute('class', `x${i}y${j}`)
       }
-
-      let grid = document.querySelector('.edenContainer')
-      grid.appendChild(gridPosition)
+      gridBox.appendChild(gridPosition)
     }
   }
 }
 
 generateApple()
 //set arrow key movement event listener
-document.addEventListener('keydown', (s) => gameKeys(s))
+
+function snakeMovement() {
+  // snake head
+  if (snakeDirection === 1) {
+    //move to the right
+    let newHead = { x: snakeBody[0].x + 1, y: snakeBody[0].y }
+    snakeBody.unshift(newHead)
+    snakeBody.pop()
+  } else if (snakeDirection === 2) {
+    //move to the left
+    let newHead = { x: snakeBody[0].x - 1, y: snakeBody[0].y }
+    snakeBody.unshift(newHead)
+    snakeBody.pop()
+  } else if (snakeDirection === 3) {
+    //move up
+    let newHead = { x: snakeBody[0].x, y: snakeBody[0].y - 1 }
+    snakeBody.unshift(newHead)
+    snakeBody.pop()
+  } else if (snakeDirection === 4) {
+    //move down
+    let newHead = { x: snakeBody[0].x, y: snakeBody[0].y + 1 }
+    snakeBody.unshift(newHead)
+    snakeBody.pop()
+  }
+}
 
 function gameKeys(s) {
-  snakeBody
-
-  // firstGridBox.classList.toggle('snake')
-  const goingUp = snakeDirectionY === -1
-  const goingDown = snakeDirectionY === 1
-  const goingLeft = snakeDirectionX === -1
-  const goingRight = snakeDirectionX === 1
+  const goingUp = snakeDirection === 3
+  const goingDown = snakeDirection === 4
+  const goingLeft = snakeDirection === 2
+  const goingRight = snakeDirection === 1
 
   if (s.code === 'ArrowUp' && !goingDown) {
-    snakeDirectionY = -1
-    snakeDirectionX = 0
+    snakeDirection = 3
     console.log(s.code)
   } else if (s.code === 'ArrowDown' && !goingUp) {
-    snakeDirectionY = 1
-    snakeDirectionX = 0
+    snakeDirection = 4
     console.log(s.code)
   } else if (s.code === 'ArrowLeft' && !goingRight) {
-    snakeDirectionX = -1
-    snakeDirectionY = 0
+    snakeDirection = 2
     console.log(s.code)
   } else if (s.code === 'ArrowRight' && !goingLeft) {
-    snakeDirectionX = 1
-    snakeDirectionY = 0
+    snakeDirection = 1
     console.log(s.code)
   }
 }
+document.addEventListener('keydown', (s) => gameKeys(s))
+console.log(snakeDirection)
 
 //Functions for game logic
 
-function gamePlay() {
-  if (isGameOver()) {
-    return
+function paintSnake() {
+  for (let i = 0; i < height; i++) {
+    for (let j = 0; j < width; j++) {
+      // console.log(i, j)
+
+      const box = document.querySelector(`.x${i}y${j}`)
+      // console.log(box)
+
+      if (snakeIsHere(i, j) === true) {
+        box.classList.add('snake')
+      } else {
+        box.classList.remove('snake')
+      }
+    }
   }
-
-  directionChange = false
-
-  setTimeout(function gameTimer() {
-    clearGrid()
-    drawFood()
-    snakeMovement()
-    drawSnake()
-
-    //repeat
-    gamePlay()
-  }, intervalTime)
 }
 
-function drawSnake() {
-  snakeBody.forEach(snake)
+function gamePlay() {
+  snakeMovement()
+  paintSnake()
 }
 
-function drawFood() {
-  foodBody.forEach(food)
-}
+setInterval(gamePlay, 2000)
+
+// function gamePlay() {
+//   if (isGameOver()) {
+//     return
+//   }
+
+//   directionChange = false
+
+//   setTimeout(function gameTimer() {
+//     clearGrid()
+//     drawFood()
+//     snakeMovement()
+//     drawSnake()
+
+//     //repeat
+//     gamePlay()
+//   }, intervalTime)
+// }
 
 function clearGrid() {
   if (snake in gridBox === true && food in gridBox === true) {
@@ -182,57 +225,65 @@ function startGame() {
 
 button.addEventListener('click', startGame)
 
-function randomfood(min, max) {
+function randomFood() {
   return Math.round(Math.random() * gridBox.length)
 }
 
 function generateApple() {
-  appleX = randomfood(0, gridBox.width - 1)
-  appleY = randomfood(0, gridBox.height - 1)
+  appleX = randomFood(0, gridBox.width - 1)
+  appleY = randomFood(0, gridBox.height - 1)
 
   snakeBody.forEach(function snakeEatenFood(yum) {
     const eatenFood = yum.x === appleX && yum.y === appleY
     if (eatenFood) generateApple()
   })
-}
-function snakeMovement() {
-  // snake head
-  let snakeHead = { x: snakeBody[0].x, y: snakeBody[0].y }
-  snakeBody.unshift(snakeHead)
-  // grow snake on apple eat
-  const snakeEatsApple = snakeBody[0].x === appleX && snakeBody[0].y === appleY
-  if (snakeEatsApple) {
-    appleScore++
-    gameScore.innerHTML = appleScore
-    generateApple()
-  } else {
-    snakeBody.pop()
+
+  // do {
+  //   appleIndex = Math.round(Math.random() * gridBox.length)
+  // } while (gridBox[randomFood].classList.contans('snake'))
+  // gridBox[randomFood].classList.add('apple')
+
+  let space = 0
+  let emptyGrid = []
+  for (let i = 0; i < gridBox.length; i++) {
+    let key = i + 1
+    let gridValue = gridBox + key[0].innerHTML
+
+    if (gridValue === '') {
+      emptyGrid.push
+    }
   }
-
-  // if (gridBox.snakeBody[0].classList('food')) {
-  //   gridBox[snakeBody[0]].classList.remove('food')
-  //   gridBox[snakeTail].classList.add('snake')
-  //   snakeBody.push(snakeTail)
-  //   appleScore++
-  //   gameScore.innerHTML = appleScore
-  //   intervalTime = intervalTime * snakeSpeed
-  //   interval = setInterval(snakeOutcomes, intervalTime)
-  // }
-  // gridBox[snakeBody[0]].classList.add('snake')
-
-  // snakeBody.unshift(snakeHead)
-  // const hasEatenApple = snakeBody[0].x === appleX && snakeBody[0].y === appleY
-  // if (hasEatenApple) {
-  //   //increase apple score
-  //   appleScore += 1
-  //   //show score display on apple scoreboard
-  //   appleScore.innerHTML = appleScore
-  //   // generate new apple on random board location
-  //   generateApple()
-  // } else {
-  //   snakeBody.pop()
-  // }
 }
+
+// console.log(snakeBody)
+
+// snakeMovement()
+// // paintSnake()
+// console.log(snakeBody)
+
+// if (gridBox.snakeBody[0].classList('food')) {
+//   gridBox[snakeBody[0]].classList.remove('food')
+//   gridBox[snakeTail].classList.add('snake')
+//   snakeBody.push(snakeTail)
+//   appleScore++
+//   gameScore.innerHTML = appleScore
+//   intervalTime = intervalTime * snakeSpeed
+//   interval = setInterval(snakeOutcomes, intervalTime)
+// }
+// gridBox[snakeBody[0]].classList.add('snake')
+
+// snakeBody.unshift(snakeHead)
+// const hasEatenApple = snakeBody[0].x === appleX && snakeBody[0].y === appleY
+// if (hasEatenApple) {
+//   //increase apple score
+//   appleScore += 1
+//   //show score display on apple scoreboard
+//   appleScore.innerHTML = appleScore
+//   // generate new apple on random board location
+//   generateApple()
+// } else {
+//   snakeBody.pop()
+// }
 
 function snakeOutcomes() {
   //Snake hitting the wall //Snake hitting its own self
@@ -241,8 +292,6 @@ function snakeOutcomes() {
   }
   //place Food
   //move SNAKE
-
-  snakeBody.unshift(snakeBody[0] + snakeDirectionX)
 
   drawBoard()
   clearInterval(interval)
