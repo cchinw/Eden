@@ -72,6 +72,7 @@ function drawBoard() {
   }
 }
 
+generateApple()
 //set arrow key movement event listener
 
 function gameKeys(s) {
@@ -101,9 +102,22 @@ function gameKeys(s) {
     console.log(s.code)
   }
 }
-let playGame = document.addEventListener('keydown', (s) => gameKeys(s))
+document.addEventListener('keydown', (s) => gameKeys(s))
 
 //Functions for game logic
+
+function gamePlay() {
+  if (isGameOver()) {
+    return
+  }
+
+  directionChange = false
+
+  setTimeout(function gameTimer() {
+    clearGrid()
+    document.getElementsByClassName('food')
+  })
+}
 
 function hideStartButton() {
   let sG = document.getElementById('start')
@@ -147,7 +161,7 @@ function snakeMovement() {
   const snakeHead = [{ x: 4, y: 7 }]
   // grow snake on apple eat
   snakeBody.unshift(snakeHead)
-  const hasEatenApple = [{ x: 4 === appleX, y: 7 === appleY }]
+  const hasEatenApple = snakeBody[0].x === appleX && snakeBody[0].y === appleY
   if (hasEatenApple) {
     //increase apple score
     appleScore += 1
@@ -158,16 +172,6 @@ function snakeMovement() {
   } else {
     snakeBody.pop()
   }
-}
-
-function gamePlay() {
-  drawBoard()
-  gameKeys()
-  startGame()
-  snakeMovement()
-  generateApple()
-  snakeOutcomes()
-  isGameOver()
 }
 
 function snakeOutcomes() {
@@ -183,8 +187,6 @@ function snakeOutcomes() {
   drawBoard()
   clearInterval(interval)
 }
-
-setTimeout(function gameTimer() {}, intervalTime)
 
 //Snake hitting an apple
 
