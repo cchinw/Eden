@@ -52,6 +52,8 @@ let gridBox = document.querySelector('.edenContainer')
 let gameScore = document.getElementsByClassName('.apple')
 let bestScore = document.getElementsByClassName('.bestScore')
 let button = document.getElementById('start')
+let snake = document.getElementsByClassName('.snake')
+let snakeFood = document.getElementsByClassName('.food')
 
 function drawBoard() {
   for (let i = 0; i < height; i++) {
@@ -74,6 +76,7 @@ function drawBoard() {
 
 generateApple()
 //set arrow key movement event listener
+document.addEventListener('keydown', (s) => gameKeys(s))
 
 function gameKeys(s) {
   // let firstGridBox = document.querySelector('.edenContainer').firstElementChild
@@ -102,7 +105,6 @@ function gameKeys(s) {
     console.log(s.code)
   }
 }
-document.addEventListener('keydown', (s) => gameKeys(s))
 
 //Functions for game logic
 
@@ -116,7 +118,12 @@ function gamePlay() {
   setTimeout(function gameTimer() {
     clearGrid()
     document.getElementsByClassName('food')
-  })
+    snakeMovement()
+    document.getElementsByClassName('.snake')
+
+    //repeat
+    gamePlay()
+  }, intervalTime)
 }
 
 function hideStartButton() {
@@ -142,7 +149,7 @@ function startGame() {
 button.addEventListener('click', startGame)
 
 function randomfood(min, max) {
-  return Math.round((Math.random() * (max - min) + min) / gridBox) * gridBox
+  return Math.round((Math.random() * (max - min) + min) / gridSize) * gridSize
 }
 
 function generateApple() {
@@ -158,7 +165,7 @@ function generateApple() {
 }
 function snakeMovement() {
   // snake head
-  const snakeHead = [{ x: 4, y: 7 }]
+  const snakeHead = { x: snakeBody[4].x, y: snakeBody[7].y }
   // grow snake on apple eat
   snakeBody.unshift(snakeHead)
   const hasEatenApple = snakeBody[0].x === appleX && snakeBody[0].y === appleY
@@ -191,6 +198,7 @@ function snakeOutcomes() {
 //Snake hitting an apple
 
 function isGameOver() {
+  showStartButton()
   for (let i = 4; i < snakeBody.length; i++) {
     if (snakeBody[i].x === snakeBody[0].x && snakeBody[i].y === snakeBody[0].y)
       return true
