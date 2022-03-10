@@ -126,6 +126,12 @@ function gamePlay() {
   }, intervalTime)
 }
 
+function clearGrid() {
+  if (snake in gridBox === true && snakeFood in gridBox === true) {
+    removeAttribute('.snake', '.food')
+  }
+}
+
 function hideStartButton() {
   let sG = document.getElementById('start')
   sG.style.display = 'none'
