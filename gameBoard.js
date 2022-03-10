@@ -146,8 +146,8 @@ function randomfood(min, max) {
 }
 
 function generateApple() {
-  appleX = randomfood(0, gridBox.width - gridBox)
-  appleY = randomfood(0, gridBox.height - gridBox)
+  appleX = randomfood(0, gridBox.width - gridSize)
+  appleY = randomfood(0, gridBox.height - gridSize)
 
   snakeBody.forEach(function snakeEatenFood(yum) {
     let eatenFood = yum.x === appleX && yum.y === appleY
