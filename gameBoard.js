@@ -1,3 +1,21 @@
+// Requiremments
+
+// Include a minimum of 2 HTML pages and navigation between them
+// Include a minimum of 2 event handlers
+// Have at least 20 meaningful git commits. You should be committing your changes every time you build a new feature.
+// Your code should be properly indented, spaced, and within code blocks. DO NOT leave in commented out code that was left unused (bad practice). Comments, if in your code at all, should be in your code to describe what your functions are doing.
+// Display proper use of global variables and function parameters (function scopes)
+// Use camelCase for JavaScript variables
+// Be deployed on Surge
+
+// Post MVP Ideas
+
+// Add a dark mode feature
+// Use object oriented programming to create reusable elements
+// Use Google Fonts in your project. To do this, find a font on Google Fonts , select the font, go to the embed link, and put its HTML tag in your HTML document's <head> tag, above your link to your CSS. You will then need to use its CSS Rule to apply it in your CSS file.
+
+//---------------------------------------------------------------------Starts Here
+
 // Game Tools
 let hasGamestarted = false
 
@@ -53,7 +71,7 @@ let gameScore = document.getElementsByClassName('.apple')
 let bestScore = document.getElementsByClassName('.bestScore')
 let button = document.getElementById('start')
 let snake = document.getElementsByClassName('.snake')
-let snakeFood = document.getElementsByClassName('.food')
+let food = document.getElementsByClassName('.food')
 
 function drawBoard() {
   for (let i = 0; i < height; i++) {
@@ -117,17 +135,25 @@ function gamePlay() {
 
   setTimeout(function gameTimer() {
     clearGrid()
-    document.getElementsByClassName('food')
+    drawFood()
     snakeMovement()
-    document.getElementsByClassName('.snake')
+    drawSnake()
 
     //repeat
     gamePlay()
   }, intervalTime)
 }
 
+function drawSnake() {
+  snakeBody.forEach(snake)
+}
+
+function drawFood() {
+  foodBody.forEach(food)
+}
+
 function clearGrid() {
-  if (snake in gridBox === true && snakeFood in gridBox === true) {
+  if (snake in gridBox === true && food in gridBox === true) {
     removeAttribute('.snake', '.food')
   }
 }
@@ -155,12 +181,12 @@ function startGame() {
 button.addEventListener('click', startGame)
 
 function randomfood(min, max) {
-  return Math.round((Math.random() * (max - min) + min) / gridSize) * gridSize
+  return Math.round(Math.random() * gridBox.length)
 }
 
 function generateApple() {
-  appleX = randomfood(0, gridBox.width - gridSize)
-  appleY = randomfood(0, gridBox.height - gridSize)
+  appleX = randomfood(0, gridBox.width - 1)
+  appleY = randomfood(0, gridBox.height - 1)
 
   snakeBody.forEach(function snakeEatenFood(yum) {
     let eatenFood = yum.x === appleX && yum.y === appleY
@@ -194,8 +220,19 @@ function snakeOutcomes() {
   }
   //place Food
   //move SNAKE
-  let snakeTail = snakeBody[2]
+
   snakeBody.unshift(snakeBody[0] + snakeDirectionX)
+
+  if (gridBox[snakeBody[0]].classList.contains('food')) {
+    gridBox[snakeBody[0]].classList.remove('food')
+    gridBox[snakeTail].classList.add('snake')
+    snakeBody.push(snakeTail)
+    appleScore++
+    gameScore.innerHTML = appleScore
+    intervalTime = intervalTime * snakeSpeed
+    interval = setInterval(snakeOutcomes, intervalTime)
+  }
+  gridBox[snakeBody[0]].classList.add('snake')
 
   drawBoard()
   clearInterval(interval)
