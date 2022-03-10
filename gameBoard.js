@@ -2,9 +2,9 @@
 let hasGamestarted = false
 
 let snakeBody = [
-  { x: 2, y: 7 },
+  { x: 4, y: 7 },
   { x: 3, y: 7 },
-  { x: 4, y: 7 }
+  { x: 2, y: 7 }
 ]
 
 function snakeIsHere(row, column) {
@@ -29,6 +29,7 @@ function foodIsHere(row, column) {
   return result
 }
 
+let directionChange = false
 let snakeDirectionX = 1
 let snakeDirectionY = 0
 let snakeSpeed = 1
@@ -100,7 +101,7 @@ function gameKeys(s) {
     console.log(s.code)
   }
 }
-document.addEventListener('keydown', (e) => gameKeys(e))
+let playGame = document.addEventListener('keydown', (s) => gameKeys(s))
 
 //Functions for game logic
 
@@ -143,10 +144,10 @@ function generateApple() {
 }
 function snakeMovement() {
   // snake head
-  const snakeHead = { x: 4, y: 7 }
+  const snakeHead = [{ x: 4, y: 7 }]
   // grow snake on apple eat
   snakeBody.unshift(snakeHead)
-  const hasEatenApple = { x: 4 === appleX, y: 7 === appleY }
+  const hasEatenApple = [{ x: 4 === appleX, y: 7 === appleY }]
   if (hasEatenApple) {
     //increase apple score
     appleScore += 1
@@ -159,26 +160,37 @@ function snakeMovement() {
   }
 }
 
-setTimeout()
+function gamePlay() {
+  drawBoard()
+  gameKeys()
+  startGame()
+  snakeMovement()
+  generateApple()
+  snakeOutcomes()
+  isGameOver()
+}
 
 function snakeOutcomes() {
   //Snake hitting the wall //Snake hitting its own self
   if (isGameOver()) {
     return
   }
-
   //place Food
   //move SNAKE
+  let snakeTail = snakeBody[2]
+  snakeBody.unshift(snakeBody[0] + snakeDirectionX)
 
   drawBoard()
   clearInterval(interval)
 }
 
+setTimeout(function gameTimer() {}, intervalTime)
+
 //Snake hitting an apple
 
 function isGameOver() {
   for (let i = 4; i < snakeBody.length; i++) {
-    if (snakeBody[i].x === snakeBody[0].x && snakeBody[i].y === snake[0].y)
+    if (snakeBody[i].x === snakeBody[0].x && snakeBody[i].y === snakeBody[0].y)
       return true
   }
 
