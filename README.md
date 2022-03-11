@@ -2,8 +2,9 @@
 
 ### By Chinwendu Ukoha
 
-[LinkedIn] (https://www.linkein.com/in/chinwenduukoha)
-[Trello for Eden Game] (https://trello.com/b/HDHUjIal/snake-board-game)
+[LinkedIn](https://www.linkein.com/in/chinwenduukoha)
+[Trello for Eden Game](https://trello.com/b/HDHUjIal/snake-board-game)
+[Game Link](https://gardenofeden.surge.sh/)
 
 Snake game inspired by the story of the garden of Eden
 
