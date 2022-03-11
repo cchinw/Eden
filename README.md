@@ -80,26 +80,28 @@ Once `gameOver`, a **modal** pops up and prompts user to `Play Again`. If Play A
 
 [Google Snake Game](https://g.co/kgs/WXFeip)
 
-[Title Icon] (https://freesvg.org/img/1367392415.png)
+[Title Icon](https://freesvg.org/img/1367392415.png)
 
-[gridGame height and width] (https://elementor.com/help/whats-the-difference-between-px-em-rem-vw-and-vh/)
+[gridGame height and width](https://elementor.com/help/whats-the-difference-between-px-em-rem-vw-and-vh/)
 
-[Resizing images in CSS] (https://codepen.io/sarus/pen/PJGPmy)
+[Resizing images in CSS](https://codepen.io/sarus/pen/PJGPmy)
 
-[gameIcons] (https://fontawesome.com/kits/81bbffb19f/use?welcome=yes)
+[gameIcons](https://fontawesome.com/kits/81bbffb19f/use?welcome=yes)
 
-[DOMContentLoaded Event listener] (https://developer.mozilla.org/en-US/docs/Web/API/Window/DOMContentLoaded_event)
+[DOMContentLoaded Event listener](https://developer.mozilla.org/en-US/docs/Web/API/Window/DOMContentLoaded_event)
 
-[Keyup] (https://developer.mozilla.org/en-US/docs/Web/API/Document/keyup_event)
+[Keyup](https://developer.mozilla.org/en-US/docs/Web/API/Document/keyup_event)
 
-[clearInterval] (https://www.w3schools.com/jsref/met_win_clearinterval.asp)
+[clearInterval](https://www.w3schools.com/jsref/met_win_clearinterval.asp)
 
-[Unshift] (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/unshift)
+[Unshift](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/unshift)
 
-[Remove attribute] (https://www.w3schools.com/jsref/met_element_removeattribute.asp)
+[Remove attribute](https://www.w3schools.com/jsref/met_element_removeattribute.asp)
 
-[Modals] (https://www.w3schools.com/howto/howto_css_modals.asp)
+[Modals](https://www.w3schools.com/howto/howto_css_modals.asp)
 
-[Adding Gifs to p tag] (https://www.codegrepper.com/code-examples/html/how+to+add+gif+in+html+w3schools)
+[Adding Gifs to p tag](https://www.codegrepper.com/code-examples/html/how+to+add+gif+in+html+w3schools)
 
-[Object.assign()] (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign)
+[Object.assign()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign)
+
+[Ternary Operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_Operator)

@@ -9,12 +9,21 @@ let snake = document.getElementsByClassName('.snake')
 let food = document.getElementsByClassName('.food')
 let modal = document.querySelector('.modal')
 let spanModal = document.getElementsByClassName('closeBtn')[0]
+let audio = document.querySelector('.audioBtn')
+let music = document.querySelector('audio')
+audio.addEventListener('click', playMusic)
 
+function playMusic() {
+  if (music.paused) {
+    music.play()
+  } else {
+    music.pause()
+  }
+}
 //Building grid on gameBoard
 let width = 15
 let height = 15
 let gridSize = width * height
-
 let changingDirections = false
 let snakeDirection = 1 //1 is right, 2 is left, 3 is up and 4 is down
 let snakeSpeed = 1

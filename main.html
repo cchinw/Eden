@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Monofett&family=Monoton&family=Neonderthaw&family=Short+Stack&display=swap');
+    </style>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <script defer src="gameBoard.js"></script>
+  <title>Eden</title>
+  <link rel="icon" href="https://freesvg.org/img/1367392415.png" type="image/x-icon">
+  <script src="https://kit.fontawesome.com/81bbffb19f.js" crossorigin="anonymous"></script>
+</head>
+<body class="mainPage">
+
+  <h1 class="gameHeader">Welcome to the Garden of Eden</h1>
+
+  <div class="wholePage">
+    
+    <h3>
+      <i class="apple fa-solid fa-apple-whole"> <span id="score">0</span></i>
+      <i class="bestScore fa-solid fa-medal"> <span>0</span></i>
+      <i id ="gameInfo"><span>Easy Mode</span></i>
+
+      <div>
+        <button class="audioBtn">Play/Pause Music</button>
+      </div>
+
+      <div id = 'hideable' class="startGame">
+        <button id="start">Start Game</button>
+        <button id="gameMode">Click for Hard Mode</button>
+      </div>
+    </h3> 
+
+    <audio autoplay loop>
+      <source src="audio.mp3" type="audio/mp3">
+    </audio>
+
+  <div>
+  <div id = "snakeboard" class="edenContainer"></div>
+  </div>
+
+  <div id="gameOverModal" class="modal">
+    <div class="modalDisplay">
+      <p>Why is there two of everything? <span id="seeingStarsGif"><img src="https://c.tenor.com/zoLcAXgAb0YAAAAM/lizzie-mcguire-dizzy.gif" alt="lizzie-mcguire-dizzy"></span></p>
+      <button class="closeBtn">Play Again?</button>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

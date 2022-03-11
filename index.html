@@ -12,41 +12,21 @@
   <title>Eden</title>
   <link rel="icon" href="https://freesvg.org/img/1367392415.png" type="image/x-icon">
   <script src="https://kit.fontawesome.com/81bbffb19f.js" crossorigin="anonymous"></script>
+  <title>Document</title>
 </head>
-<body class="mainPage">
-
-  <div>
-    <audio autoplay loop>
-      <source src="audio.mp3" type="audio/mp3">
-    </audio>
+<body class="landingBody">
+  <div class="landing">
+    <header>
+      <h1 class="landingH1">STEP INTO THE GARDEN OF EDEN</h1>
+    </header>
+    <button class="audioBtn">Play/Pause Music</button>
+      <div class="landingAudio">
+        <audio autoplay loop>
+          <source src="audio.mp3" type="audio/mp3">
+        </audio>
+      </div>
   </div>
-
-  <header class="grid-container">
-
-    <h1 class="gameHeader">Welcome to the Garden of Eden</h1>
-    
-    <h3>
-      <i class="apple fa-solid fa-apple-whole"> <span id="score">0</span></i>
-      <i class="bestScore fa-solid fa-medal"> <span>0</span></i>
-      <i id ="gameInfo"><span>Easy Mode</span></i>
-    </h3> 
-
-  </header>
-
-  <div>
-  <div id = "snakeboard" class="edenContainer"></div>
-  </div>
-
-  <div id = 'hideable' class="startGame">
-    <button id="start">Start Game</button>
-    <button id="gameMode">Click for Hard Mode</button>
-  </div>
-
-  <div id="gameOverModal" class="modal">
-    <div class="modalDisplay">
-      <p>Why is there two of everything? <span id="seeingStarsGif"><img src="https://c.tenor.com/zoLcAXgAb0YAAAAM/lizzie-mcguire-dizzy.gif" alt="lizzie-mcguire-dizzy"></span></p>
-      <button class="closeBtn">Play Again?</button>
-    </div>
-  </div>
+  
+<a class="enter" href="main.html">Enter Eden</a>
 </body>
 </html>
