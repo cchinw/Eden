@@ -32,6 +32,7 @@
   display: flex;
   margin-top: 100px;
   color: aliceblue;
+  font-size: 30px;
 }
 
 h3 {
@@ -55,14 +56,19 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 150vh;
-  width: 150vw;
+  height: 100vh;
+  width: 100vw;
   margin: 0px;
   background-image: url('https://i.pinimg.com/originals/14/b5/b7/14b5b73c4be9e78cc826af30c9ece3bb.jpg');
   font-family: 'Neonderthaw', cursive;
   font-family: 'Short Stack', cursive;
   font-family: 'Monofett', cursive;
   font-family: 'Monoton', cursive;
+  background-size: cover;
+  display: flex;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
 }
 
 .edenContainer {
