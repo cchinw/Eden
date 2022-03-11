@@ -1,21 +1,3 @@
-// Requiremments
-
-// Include a minimum of 2 HTML pages and navigation between them
-// Include a minimum of 2 event handlers
-// Have at least 20 meaningful git commits. You should be committing your changes every time you build a new feature.
-// Your code should be properly indented, spaced, and within code blocks. DO NOT leave in commented out code that was left unused (bad practice). Comments, if in your code at all, should be in your code to describe what your functions are doing.
-// Display proper use of global variables and function parameters (function scopes)
-// Use camelCase for JavaScript variables
-// Be deployed on Surge
-
-// Post MVP Ideas
-
-// Add a dark mode feature
-// Use object oriented programming to create reusable elements
-// Use Google Fonts in your project. To do this, find a font on Google Fonts , select the font, go to the embed link, and put its HTML tag in your HTML document's <head> tag, above your link to your CSS. You will then need to use its CSS Rule to apply it in your CSS file.
-
-//---------------------------------------------------------------------Starts Here
-
 //DOM Elements
 let gridBox = document.querySelector('.edenContainer')
 let gameScore = document.querySelector('.apple')
@@ -25,13 +7,16 @@ let gameModeButton = document.getElementById('gameMode')
 let gameMessage = document.getElementById('gameInfo')
 let snake = document.getElementsByClassName('.snake')
 let food = document.getElementsByClassName('.food')
+let modal = document.querySelector('.modal')
+let modalButtun = document.getElementById('gameOverBtn')
+let spanModal = document.getElementsByClassName('closeBtn')[0]
 
 //Building grid on gameBoard
 let width = 15
 let height = 15
 let gridSize = width * height
 
-let directionChange = false
+let changingDirections = false
 let snakeDirection = 1 //1 is right, 2 is left, 3 is up and 4 is down
 let snakeSpeed = 1
 let interval = 0
@@ -39,18 +24,13 @@ let intervalTime = 250
 let appleX
 let appleY
 
-// Game Tools
-// let hasGamestarted = false
+// Grid coordinates
 
 let snakeBody = [
   { x: 4, y: 7 },
   { x: 3, y: 7 },
   { x: 2, y: 7 }
 ]
-// console.log(snakeBody)
-
-// let snakeHead = [{ x: 4, y: 7 }]
-// let snakeTail = [{ x: 2, y: 7 }]
 
 function snakeIsHere(y, x) {
   let result = false
@@ -74,17 +54,11 @@ function foodIsHere(y, x) {
   return result
 }
 
-// function findEmptyGrid() {
-//   if (snakeIsHere === true) {
-//     foodIsHere === false
-//   }
-// }
-
 // Variables for Scoring
 let appleScore = 0
 let personalBest = 0
 
-function initBoard() {
+function mainBoard() {
   for (let i = 0; i < height; i++) {
     for (let j = 0; j < width; j++) {
       let gridPosition = document.createElement('div')
@@ -112,9 +86,10 @@ function clearBoard() {
   })
 }
 
-// generateApple()
 //set arrow key movement event listener
 function gameKeys(s) {
+  if (changingDirections) return
+  changingDirections = true
   const goingUp = snakeDirection === 3
   const goingDown = snakeDirection === 4
   const goingLeft = snakeDirection === 2
@@ -142,22 +117,18 @@ function snakeMovement() {
     //move to the right
     let newHead = { x: snakeBody[0].x + 1, y: snakeBody[0].y }
     snakeBody.unshift(newHead)
-    //.pop()
   } else if (snakeDirection === 2) {
     //move to the left
     let newHead = { x: snakeBody[0].x - 1, y: snakeBody[0].y }
     snakeBody.unshift(newHead)
-    //snakeBody.pop()
   } else if (snakeDirection === 3) {
     //move up
     let newHead = { x: snakeBody[0].x, y: snakeBody[0].y - 1 }
     snakeBody.unshift(newHead)
-    //snakeBody.pop()
   } else if (snakeDirection === 4) {
     //move down
     let newHead = { x: snakeBody[0].x, y: snakeBody[0].y + 1 }
     snakeBody.unshift(newHead)
-    //snakeBody.pop()
   }
 
   const hasEatenFood =
@@ -179,17 +150,12 @@ function snakeMovement() {
   }
 }
 
-// console.log(snakeDirection)
-
 //Functions for game logic
 
 function paintSnake() {
   for (let i = 0; i < height; i++) {
     for (let j = 0; j < width; j++) {
-      // console.log(i, j)
-
       const box = document.querySelector(`.x${i}y${j}`)
-      // console.log(box)
 
       if (snakeIsHere(i, j) === true) {
         box.classList.add('snake')
@@ -219,29 +185,35 @@ function paintFood() {
 
 function gamePlay() {
   snakeMovement()
-  let gameOver = isGameOver()
-  if (gameOver === true) {
+
+  if (isGameOver()) {
+    modalPopup()
     clearInterval(interval)
   } else {
+    changingDirections = false
     clearBoard()
     paintSnake()
     paintFood()
-    //drawBoard()
   }
 }
 
 function startGame() {
+  resetSnake()
   hideStartButton()
-  initBoard()
+  if (EasyGameMode) {
+    //easy variables
+    easyVariables()
+  } else {
+    //hard variables
+    hardVariables()
+  }
+  intervalTime = 500
   hasGamestarted = true
   appleScore = 0
-  personalBest = 0
   appleScore.innerHTML = appleScore
-  //intervalTime = 500
-  //TODO: Call function to generate random apple
-  // clearInterval(interval)
   interval = setInterval(gamePlay, intervalTime)
 }
+
 button.addEventListener('click', startGame)
 gameModeButton.addEventListener('click', toggleGameMode)
 let EasyGameMode = true
@@ -250,22 +222,16 @@ function toggleGameMode() {
   if (EasyGameMode) {
     //easy variables
 
-    width = 15
-    height = 15
-    incVal = 50
-    intervalTime = 500
-    gameModeButton.innerHTML = 'Click for Hard Mode'
+    easyVariables()
   } else {
     //hard variables
-    width = 30
-    height = 30
-    incVal = 100
-    intervalTime = 300
-    gameModeButton.innerHTML = 'Click for Easy Mode'
+    hardVariables()
   }
   while (gridBox.firstChild) {
     gridBox.removeChild(gridBox.firstChild)
   }
+  mainBoard()
+  // Change board dimensions based on player mode
 
   Object.assign(gridBox.style, {
     'grid-template-columns': 'repeat(' + width + ',1fr)'
@@ -273,12 +239,28 @@ function toggleGameMode() {
   Object.assign(gridBox.style, {
     'grid-template-rows': 'repeat(' + height + ',1fr)'
   })
-  //gridBox.style.cssText = 'gridTemplateColumns: repeat(' + width + ', 1fr);'
-  //gridBox.style.gridTemplateRows = 'repeat(30, 1fr);'
 
   gridSize = width * height
   gameMessage.innerHTML = EasyGameMode ? 'Easy Mode' : 'Hard Mode'
 }
+
+function hardVariables() {
+  width = 30
+  height = 30
+  incrementValue = 100
+  intervalTime = 300
+  gameModeButton.innerHTML = 'Click for Easy Mode'
+}
+
+function easyVariables() {
+  width = 15
+  height = 15
+  incrementValue = 50
+  intervalTime = 500
+  gameModeButton.innerHTML = 'Click for Hard Mode'
+}
+
+// Hide/show buttons once game starts
 
 function hideStartButton() {
   let sG = document.getElementById('hideable')
@@ -307,18 +289,18 @@ function generateApple() {
   })
 }
 
-let incVal = 50
+let incrementValue = 50
 
 function IncrementTime() {
   clearInterval(interval)
-  intervalTime -= incVal
+  intervalTime -= incrementValue
   intervalTime = Math.min(Math.max(intervalTime, 100), 500)
   interval = setInterval(gamePlay, intervalTime)
 }
 
 function isGameOver() {
   // showStartButton()
-  for (let i = 1; i < snakeBody.length; i++) {
+  for (let i = 4; i < snakeBody.length; i++) {
     if (snakeBody[i].x === snakeBody[0].x && snakeBody[i].y === snakeBody[0].y)
       return true
   }
@@ -330,3 +312,37 @@ function isGameOver() {
 
   return hitLeftWall || hitRightWall || hitTopWall || hitBottomWall
 }
+
+function modalPopup() {
+  console.log('model should pop up')
+  modal.style.display = 'block'
+  spanModal.addEventListener('click', closeSpanModal)
+  document.addEventListener('click', closeSpanModalWithTarget)
+}
+
+function closeSpanModal() {
+  modal.style.display = 'none'
+  spanModal.removeEventListener('click', closeSpanModal)
+  document.removeEventListener('click', closeSpanModalWithTarget)
+  showStartButton()
+}
+
+function closeSpanModalWithTarget(targetModal) {
+  if (targetModal.target === modal) {
+    modal.style.display = 'none'
+    document.removeEventListener('click', closeSpanModalWithTarget)
+    spanModal.removeEventListener('click', closeSpanModal)
+    showStartButton()
+  }
+}
+
+function resetSnake() {
+  snakeBody = [
+    { x: 4, y: 7 },
+    { x: 3, y: 7 },
+    { x: 2, y: 7 }
+  ]
+
+  snakeDirection = 1
+}
+mainBoard()

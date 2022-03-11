@@ -1,3 +1,13 @@
+.landing {
+  background-image: url('http://christianitymalaysia.com/wp/wp-content/uploads/2014/07/guard.jpg');
+  background-size: cover;
+}
+
+.landingH1 {
+  color: #a60000;
+  font-size: 50px;
+}
+
 h1 {
   display: flex;
   margin-top: 80px;
@@ -11,13 +21,6 @@ h1 {
   height: 50px;
 }
 
-/* .bestScore {
-  display: flex;
-  justify-content: space-between;
-  padding: 0 30px 0 30px;
-  height: 50px;
-} */
-
 body {
   display: flex;
   flex-direction: column;
@@ -27,6 +30,10 @@ body {
   width: 100vw;
   margin: 0px;
   background-color: #7fffd4;
+  font-family: 'Neonderthaw', cursive;
+  font-family: 'Short Stack', cursive;
+  font-family: 'Monofett', cursive;
+  font-family: 'Monoton', cursive;
 }
 
 .edenContainer {
@@ -58,4 +65,38 @@ button {
 
 .grids {
   background-color: white;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: #a02b01;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modalDisplay {
+  background-color: #fc8230;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #febb00;
+  width: 50%;
+}
+
+.closeBtn {
+  color: #a02b01;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.closeBtn:hover .closeBtn:focus {
+  color: #49333d;
+  text-decoration: none;
+  cursor: pointer;
 }
