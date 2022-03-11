@@ -21,13 +21,15 @@ let gridBox = document.querySelector('.edenContainer')
 let gameScore = document.querySelector('.apple')
 let bestScore = document.querySelector('.bestScore')
 let button = document.getElementById('start')
+let gameModeButton = document.getElementById('gameMode')
+let gameMessage = document.getElementById('gameInfo')
 let snake = document.getElementsByClassName('.snake')
 let food = document.getElementsByClassName('.food')
 
 //Building grid on gameBoard
-const width = 15
-const height = 15
-const gridSize = width * height
+let width = 15
+let height = 15
+let gridSize = width * height
 
 let directionChange = false
 let snakeDirection = 1 //1 is right, 2 is left, 3 is up and 4 is down
@@ -235,19 +237,55 @@ function startGame() {
   appleScore = 0
   personalBest = 0
   appleScore.innerHTML = appleScore
-  intervalTime = 500
+  //intervalTime = 500
   //TODO: Call function to generate random apple
   // clearInterval(interval)
   interval = setInterval(gamePlay, intervalTime)
 }
 button.addEventListener('click', startGame)
+gameModeButton.addEventListener('click', toggleGameMode)
+let EasyGameMode = true
+function toggleGameMode() {
+  EasyGameMode = !EasyGameMode
+  if (EasyGameMode) {
+    //easy variables
+
+    width = 15
+    height = 15
+    incVal = 50
+    intervalTime = 500
+    gameModeButton.innerHTML = 'Click for Hard Mode'
+  } else {
+    //hard variables
+    width = 30
+    height = 30
+    incVal = 100
+    intervalTime = 300
+    gameModeButton.innerHTML = 'Click for Easy Mode'
+  }
+  while (gridBox.firstChild) {
+    gridBox.removeChild(gridBox.firstChild)
+  }
+
+  Object.assign(gridBox.style, {
+    'grid-template-columns': 'repeat(' + width + ',1fr)'
+  })
+  Object.assign(gridBox.style, {
+    'grid-template-rows': 'repeat(' + height + ',1fr)'
+  })
+  //gridBox.style.cssText = 'gridTemplateColumns: repeat(' + width + ', 1fr);'
+  //gridBox.style.gridTemplateRows = 'repeat(30, 1fr);'
+
+  gridSize = width * height
+  gameMessage.innerHTML = EasyGameMode ? 'Easy Mode' : 'Hard Mode'
+}
 
 function hideStartButton() {
-  let sG = document.getElementById('start')
+  let sG = document.getElementById('hideable')
   sG.style.display = 'none'
 }
 function showStartButton() {
-  let sG = document.getElementById('start')
+  let sG = document.getElementById('hideable')
   sG.style.display = 'block'
 }
 
@@ -268,32 +306,15 @@ function generateApple() {
     }
   })
 }
+
+let incVal = 50
+
 function IncrementTime() {
-  intervalTime -= 50
-  intervalTime = Math.min(Math.max(intervalTime, 250), 500)
+  clearInterval(interval)
+  intervalTime -= incVal
+  intervalTime = Math.min(Math.max(intervalTime, 100), 500)
+  interval = setInterval(gamePlay, intervalTime)
 }
-// function clearGrid() {
-//   if (snake in gridBox === true && food in gridBox === true) {
-//     removeAttribute('.snake', '.food')
-//   }
-// }
-
-//   // do {
-//   //   appleIndex = Math.round(Math.random() * gridBox.length)
-//   // } while (gridBox[randomFood].classList.contans('snake'))
-//   // gridBox[randomFood].classList.add('apple')
-
-//   let space = 0
-//   let emptyGrid = []
-//   for (let i = 0; i < gridBox.length; i++) {
-//     let key = i + 1
-//     let gridValue = gridBox + key[0].innerHTML
-
-//     if (gridValue === '') {
-//       emptyGrid.push
-//     }
-//   }
-// }
 
 function isGameOver() {
   // showStartButton()
