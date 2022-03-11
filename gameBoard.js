@@ -8,7 +8,6 @@ let gameMessage = document.getElementById('gameInfo')
 let snake = document.getElementsByClassName('.snake')
 let food = document.getElementsByClassName('.food')
 let modal = document.querySelector('.modal')
-let modalButtun = document.getElementById('gameOverBtn')
 let spanModal = document.getElementsByClassName('closeBtn')[0]
 
 //Building grid on gameBoard
@@ -314,7 +313,6 @@ function isGameOver() {
 }
 
 function modalPopup() {
-  console.log('model should pop up')
   modal.style.display = 'block'
   spanModal.addEventListener('click', closeSpanModal)
   document.addEventListener('click', closeSpanModalWithTarget)
@@ -342,7 +340,5 @@ function resetSnake() {
     { x: 3, y: 7 },
     { x: 2, y: 7 }
   ]
-
-  snakeDirection = 1
 }
 mainBoard()
